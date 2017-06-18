@@ -1,9 +1,11 @@
 var uuid = require('node-uuid');
 var util = require('util');
 var fs = require('fs');
+var path = require('path');
+var config = require('../../config/app');
 
 var UserStore = module.exports = {
-    store  : './localstore/users.json',
+    store  : path.join(config.localstorePath, 'users.json'),
     entity : 'users',
     create : function(obj, callback){
         var me = this;
@@ -45,7 +47,7 @@ var UserStore = module.exports = {
     getByAttr : function(key, val, opts, cb){
         var matches = [], matched;
         opts = opts || {};
-        this.retrieve(function(e, entities){
+        this.retrieve(function(e, entities){          
             if(e){
                 return cb(e, []);
             }
@@ -99,7 +101,7 @@ var UserStore = module.exports = {
         });
     },
     retrieve : function(cb){
-        fs.readFile(this.store, 'utf8', function(e, content){
+        fs.readFile(this.store, 'utf8', function(e, content){            
             if(e){
                 return cb('error loading file: ' + e);
             }

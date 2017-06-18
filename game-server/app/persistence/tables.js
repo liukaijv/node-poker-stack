@@ -1,9 +1,12 @@
 var uuid = require('node-uuid');
 var util = require('util');
 var fs = require('fs');
+var path = require('path');
+var config = require('../../config/app');
+
 
 var TableStore = module.exports = {
-    store  : './localstore/tables.json',
+    store  : path.join(config.localstorePath, 'tables.json'),
     entity : 'tables',
     create : function(obj, cb){
         var me = this;
